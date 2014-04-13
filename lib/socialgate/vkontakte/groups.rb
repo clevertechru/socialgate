@@ -4,7 +4,7 @@ module SocialGate
     class Groups
 
       MAX_GROUPS_IN_LIST = 1000
-      FILTER_ADMIN       = 'admin, model'
+      FILTER_ADMIN       = 'admin, moder'
 
       attr_reader :client
 
