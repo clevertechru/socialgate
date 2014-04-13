@@ -13,15 +13,24 @@ module SocialGate
       end
 
       def user_groups(user_id)
-        @vk_user_groups       = client.groups.get(uid: user_id, extended: 1, fields: 'members_count', count: MAX_GROUPS_IN_LIST)
-        @vk_user_groups.shift #remove first element contains count
-        @vk_user_groups
+        groups(uid: user_id)
       end
 
       def user_admin_groups(user_id)
-        @vk_user_groups       = client.groups.get(uid: user_id, extended: 1, fields: 'members_count', filter: FILTER_ADMIN, count: MAX_GROUPS_IN_LIST)
-        @vk_user_groups.shift #remove first element contains count
-        @vk_user_groups
+        groups(uid: user_id, filter: FILTER_ADMIN)
+      end
+
+      private
+      def groups(options)
+        opt = {
+           extended: 1,
+           fields:   'members_count',
+           count:    MAX_GROUPS_IN_LIST
+        }.merge(options)
+
+        groups = client.groups.get(opt)
+        groups.shift #remove first element contains count
+        groups
       end
     end
 
